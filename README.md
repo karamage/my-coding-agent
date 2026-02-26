@@ -63,3 +63,13 @@ Type naturally to chat with the agent. It will use tools autonomously to complet
 npm run build   # Compile TypeScript to dist/
 npm start       # Run compiled output
 ```
+
+## Testing
+
+```bash
+npm test               # Run all unit tests
+npm run test:watch     # Run tests in watch mode
+npm run test:coverage  # Run tests with coverage report
+```
+
+Unit tests are written with [Jest](https://jestjs.io/) + [ts-jest](https://kulshekhar.github.io/ts-jest/) and cover all 6 tools and the `CodingAgent` class (57 tests across 7 suites).

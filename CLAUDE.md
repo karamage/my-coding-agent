@@ -8,6 +8,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run dev    # Run with tsx (no build step needed)
 npm run build  # Compile TypeScript to dist/
 npm start      # Run compiled output
+npm test       # Run unit tests (Jest)
+npm run test:coverage  # Run tests with coverage report
 ```
 
 Requires `.env` with `OPENAI_API_KEY=sk-...`.
@@ -46,3 +48,31 @@ const { zodToJsonSchema } = require('zod-to-json-schema') as { zodToJsonSchema: 
 **`search_files`** uses `grep -rn` and only searches `.ts`, `.js`, `.json`, `.md` files. Results capped at 50 lines.
 
 **`list_directory`** builds a tree view, filters out `node_modules`, `.git`, and hidden files (`.`-prefixed), max depth 4.
+
+## Testing
+
+**Stack:** Jest 29 + ts-jest with `isolatedModules: true` (avoids tsc OOM on OpenAI SDK types).
+
+**Test files:**
+```
+tests/
+  tools/
+    read-file.test.ts
+    write-file.test.ts
+    edit-file.test.ts
+    list-directory.test.ts
+    search-files.test.ts
+    run-command.test.ts
+  agent/
+    agent.test.ts
+```
+
+**Mock strategy:**
+- `fs/promises` — mocked for all file-based tools
+- `child_process` — mocked for `run-command` and `search-files`
+- `util` factory mock — `search-files` calls `promisify(exec)` at module load time; `util` is mocked to return a controllable `jest.fn()` as `promisify`'s return value
+- `../../src/utils/confirm` — mocked for `run-command`
+- `../../src/utils/display` — mocked for `edit-file` and `agent`
+- `openai` — mocked for `agent`
+
+**Do not run `tsc --noEmit`** — use `npm test` instead; ts-jest handles compilation per-file.
