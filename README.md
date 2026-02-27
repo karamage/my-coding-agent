@@ -73,3 +73,14 @@ npm run test:coverage  # Run tests with coverage report
 ```
 
 Unit tests are written with [Jest](https://jestjs.io/) + [ts-jest](https://kulshekhar.github.io/ts-jest/) and cover all 6 tools and the `CodingAgent` class (57 tests across 7 suites).
+
+## Linting & Formatting
+
+```bash
+npm run lint          # ESLint check
+npm run lint:fix      # ESLint auto-fix
+npm run format        # Prettier auto-format
+npm run format:check  # Prettier format check (CI use)
+```
+
+Linting is powered by [ESLint](https://eslint.org/) v10 with [typescript-eslint](https://typescript-eslint.io/) v8. Formatting is handled by [Prettier](https://prettier.io/) v3.

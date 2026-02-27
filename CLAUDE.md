@@ -10,6 +10,10 @@ npm run build  # Compile TypeScript to dist/
 npm start      # Run compiled output
 npm test       # Run unit tests (Jest)
 npm run test:coverage  # Run tests with coverage report
+npm run lint          # ESLint check
+npm run lint:fix      # ESLint auto-fix
+npm run format        # Prettier auto-format
+npm run format:check  # Prettier format check
 ```
 
 Requires `.env` with `OPENAI_API_KEY=sk-...`.
@@ -48,6 +52,19 @@ const { zodToJsonSchema } = require('zod-to-json-schema') as { zodToJsonSchema: 
 **`search_files`** uses `grep -rn` and only searches `.ts`, `.js`, `.json`, `.md` files. Results capped at 50 lines.
 
 **`list_directory`** builds a tree view, filters out `node_modules`, `.git`, and hidden files (`.`-prefixed), max depth 4.
+
+## Linting & Formatting
+
+**Stack:** ESLint v10 + typescript-eslint v8 (flat config) + Prettier v3.
+
+**Config files:**
+- `eslint.config.js` — flat config; extends `tseslint.configs.recommended` + `eslint-config-prettier`
+- `.prettierrc` — singleQuote, semi, trailingComma: "es5", printWidth: 120
+
+**Rules of note:**
+- `@typescript-eslint/no-explicit-any` — `warn` (test mocks use `any` unavoidably)
+- `@typescript-eslint/no-unused-vars` — `error`, `argsIgnorePattern: ^_`
+- The `require()` cast in `src/tools/index.ts` is suppressed with `// eslint-disable-next-line @typescript-eslint/no-require-imports`
 
 ## Testing
 
