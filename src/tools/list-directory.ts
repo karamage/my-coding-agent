@@ -1,4 +1,5 @@
 import * as fs from 'fs/promises';
+import type { Dirent } from 'fs';
 import * as path from 'path';
 import { ToolResult } from './types';
 
@@ -6,7 +7,7 @@ async function buildTree(dirPath: string, prefix = '', depth = 0): Promise<strin
   if (depth > 4) return prefix + '...\n';
 
   let result = '';
-  let entries: fs.Dirent[];
+  let entries: Dirent[];
 
   try {
     entries = await fs.readdir(dirPath, { withFileTypes: true });
