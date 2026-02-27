@@ -74,7 +74,7 @@ export const allTools = [
         const result = await readFile(args.path);
         return result.success ? result.output : `Error: ${result.error}`;
       }),
-      parse: ReadFileParams.parse,
+      parse: (args: string) => ReadFileParams.parse(JSON.parse(args)),
     },
   },
   {
@@ -87,7 +87,7 @@ export const allTools = [
         const result = await writeFile(args.path, args.content);
         return result.success ? result.output : `Error: ${result.error}`;
       }),
-      parse: WriteFileParams.parse,
+      parse: (args: string) => WriteFileParams.parse(JSON.parse(args)),
     },
   },
   {
@@ -100,7 +100,7 @@ export const allTools = [
         const result = await editFile(args.path, args.old_string, args.new_string);
         return result.success ? result.output : `Error: ${result.error}`;
       }),
-      parse: EditFileParams.parse,
+      parse: (args: string) => EditFileParams.parse(JSON.parse(args)),
     },
   },
   {
@@ -113,7 +113,7 @@ export const allTools = [
         const result = await listDirectory(args.path);
         return result.success ? result.output : `Error: ${result.error}`;
       }),
-      parse: ListDirectoryParams.parse,
+      parse: (args: string) => ListDirectoryParams.parse(JSON.parse(args)),
     },
   },
   {
@@ -126,7 +126,7 @@ export const allTools = [
         const result = await searchFiles(args.pattern, args.path, args.use_regex);
         return result.success ? result.output : `Error: ${result.error}`;
       }),
-      parse: SearchFilesParams.parse,
+      parse: (args: string) => SearchFilesParams.parse(JSON.parse(args)),
     },
   },
   {
@@ -139,7 +139,7 @@ export const allTools = [
         const result = await runCommand(args.command, args.cwd);
         return result.success ? result.output : `Error: ${result.error}`;
       }),
-      parse: RunCommandParams.parse,
+      parse: (args: string) => RunCommandParams.parse(JSON.parse(args)),
     },
   },
   {
@@ -152,7 +152,7 @@ export const allTools = [
         const result = await webSearch(args.query, args.max_results);
         return result.success ? result.output : `Error: ${result.error}`;
       }),
-      parse: WebSearchParams.parse,
+      parse: (args: string) => WebSearchParams.parse(JSON.parse(args)),
     },
   },
 ];
