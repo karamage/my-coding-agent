@@ -4,11 +4,7 @@ import { createPatch } from 'diff';
 import { showDiff } from '../utils/display';
 import { ToolResult } from './types';
 
-export async function editFile(
-  filePath: string,
-  oldString: string,
-  newString: string
-): Promise<ToolResult> {
+export async function editFile(filePath: string, oldString: string, newString: string): Promise<ToolResult> {
   try {
     const absolutePath = path.resolve(filePath);
     const original = await fs.readFile(absolutePath, 'utf-8');

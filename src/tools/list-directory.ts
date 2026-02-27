@@ -15,9 +15,7 @@ async function buildTree(dirPath: string, prefix = '', depth = 0): Promise<strin
   }
 
   // Filter out node_modules and .git
-  const filtered = entries.filter(
-    (e) => e.name !== 'node_modules' && e.name !== '.git' && !e.name.startsWith('.')
-  );
+  const filtered = entries.filter((e) => e.name !== 'node_modules' && e.name !== '.git' && !e.name.startsWith('.'));
 
   for (let i = 0; i < filtered.length; i++) {
     const entry = filtered[i];

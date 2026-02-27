@@ -4,7 +4,7 @@ import { ToolResult } from './types';
 
 const BLOCKED_PATTERNS = [
   /rm\s+-rf\s+\/(?:\s|$)/,
-  /:\(\)\s*\{\s*:\|:\s*&\s*\}/,  // fork bomb
+  /:\(\)\s*\{\s*:\|:\s*&\s*\}/, // fork bomb
   /\bdd\b.*of=\/dev/,
   /mkfs/,
   />\s*\/dev\/sd/,

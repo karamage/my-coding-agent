@@ -49,7 +49,8 @@ function withLogging<TParams extends Record<string, unknown>, TReturn>(
     showToolCall(name, args as Record<string, unknown>);
     const result = await fn(args);
     const resultStr = typeof result === 'string' ? result : JSON.stringify(result);
-    const isError = typeof result === 'object' && result !== null && 'success' in result && !(result as { success: boolean }).success;
+    const isError =
+      typeof result === 'object' && result !== null && 'success' in result && !(result as { success: boolean }).success;
     showToolResult(name, resultStr, isError);
     return result;
   };

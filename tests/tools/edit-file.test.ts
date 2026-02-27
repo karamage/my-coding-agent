@@ -32,11 +32,7 @@ describe('editFile', () => {
 
     await editFile('file.ts', 'bar', 'qux');
 
-    expect(mockFs.writeFile).toHaveBeenCalledWith(
-      expect.any(String),
-      'foo qux baz',
-      'utf-8'
-    );
+    expect(mockFs.writeFile).toHaveBeenCalledWith(expect.any(String), 'foo qux baz', 'utf-8');
   });
 
   it('calls createPatch with filePath and original/updated', async () => {
@@ -44,13 +40,7 @@ describe('editFile', () => {
 
     await editFile('my/file.ts', 'original', 'updated');
 
-    expect(mockDiff.createPatch).toHaveBeenCalledWith(
-      'my/file.ts',
-      'original content',
-      'updated content',
-      '',
-      ''
-    );
+    expect(mockDiff.createPatch).toHaveBeenCalledWith('my/file.ts', 'original content', 'updated content', '', '');
   });
 
   it('calls showDiff with the patch output', async () => {
@@ -97,10 +87,6 @@ describe('editFile', () => {
 
     await editFile('f.ts', 'abc', 'xyz');
 
-    expect(mockFs.writeFile).toHaveBeenCalledWith(
-      expect.any(String),
-      'xyz abc abc',
-      'utf-8'
-    );
+    expect(mockFs.writeFile).toHaveBeenCalledWith(expect.any(String), 'xyz abc abc', 'utf-8');
   });
 });

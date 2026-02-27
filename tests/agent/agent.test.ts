@@ -26,13 +26,16 @@ describe('CodingAgent', () => {
 
     mockRunTools = jest.fn().mockReturnValue(mockRunner);
 
-    MockOpenAI.mockImplementation(() => ({
-      chat: {
-        completions: {
-          runTools: mockRunTools,
-        },
-      },
-    } as any));
+    MockOpenAI.mockImplementation(
+      () =>
+        ({
+          chat: {
+            completions: {
+              runTools: mockRunTools,
+            },
+          },
+        }) as any
+    );
   });
 
   it('initializes with 1 system message', () => {
@@ -102,9 +105,7 @@ describe('CodingAgent', () => {
     const agent = new CodingAgent('test-key');
 
     await expect(agent.chat('oops')).resolves.toBeUndefined();
-    expect(mockDisplay.showError).toHaveBeenCalledWith(
-      expect.stringContaining('API error')
-    );
+    expect(mockDisplay.showError).toHaveBeenCalledWith(expect.stringContaining('API error'));
   });
 
   it('calls showError and does not throw when finalChatCompletion rejects', async () => {
@@ -114,9 +115,7 @@ describe('CodingAgent', () => {
     const agent = new CodingAgent('test-key');
 
     await expect(agent.chat('test')).resolves.toBeUndefined();
-    expect(mockDisplay.showError).toHaveBeenCalledWith(
-      expect.stringContaining('network error')
-    );
+    expect(mockDisplay.showError).toHaveBeenCalledWith(expect.stringContaining('network error'));
   });
 
   it('clearHistory resets to 1 system message only', async () => {

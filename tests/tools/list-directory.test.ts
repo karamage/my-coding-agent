@@ -23,10 +23,7 @@ describe('listDirectory', () => {
   it('lists files and directories in tree format', async () => {
     mockFs.readdir.mockImplementation(async (dirPath, _opts) => {
       if (dirPath === path.resolve('/tmp/proj')) {
-        return [
-          makeDirent('src', true),
-          makeDirent('README.md', false),
-        ] as any;
+        return [makeDirent('src', true), makeDirent('README.md', false)] as any;
       }
       return [];
     });
@@ -77,10 +74,7 @@ describe('listDirectory', () => {
 
     await listDirectory('/some/dir');
 
-    expect(mockFs.readdir).toHaveBeenCalledWith(
-      expect.any(String),
-      { withFileTypes: true }
-    );
+    expect(mockFs.readdir).toHaveBeenCalledWith(expect.any(String), { withFileTypes: true });
   });
 
   it('returns prefix + "..." when depth > 4', async () => {

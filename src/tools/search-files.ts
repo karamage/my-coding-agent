@@ -5,11 +5,7 @@ import { ToolResult } from './types';
 
 const execAsync = promisify(exec);
 
-export async function searchFiles(
-  pattern: string,
-  searchPath = '.',
-  useRegex = false
-): Promise<ToolResult> {
+export async function searchFiles(pattern: string, searchPath = '.', useRegex = false): Promise<ToolResult> {
   try {
     const absolutePath = path.resolve(searchPath);
     const escapedPath = absolutePath.replace(/'/g, "'\\''");

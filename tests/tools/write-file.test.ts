@@ -22,20 +22,13 @@ describe('writeFile', () => {
   it('calls mkdir with recursive:true before writing', async () => {
     await writeFile('some/nested/file.txt', 'content');
 
-    expect(mockFs.mkdir).toHaveBeenCalledWith(
-      expect.any(String),
-      { recursive: true }
-    );
+    expect(mockFs.mkdir).toHaveBeenCalledWith(expect.any(String), { recursive: true });
   });
 
   it('calls writeFile with utf-8 encoding', async () => {
     await writeFile('file.txt', 'my content');
 
-    expect(mockFs.writeFile).toHaveBeenCalledWith(
-      expect.any(String),
-      'my content',
-      'utf-8'
-    );
+    expect(mockFs.writeFile).toHaveBeenCalledWith(expect.any(String), 'my content', 'utf-8');
   });
 
   it('returns error when mkdir fails', async () => {
@@ -62,10 +55,6 @@ describe('writeFile', () => {
     const result = await writeFile('empty.txt', '');
 
     expect(result.success).toBe(true);
-    expect(mockFs.writeFile).toHaveBeenCalledWith(
-      expect.any(String),
-      '',
-      'utf-8'
-    );
+    expect(mockFs.writeFile).toHaveBeenCalledWith(expect.any(String), '', 'utf-8');
   });
 });
