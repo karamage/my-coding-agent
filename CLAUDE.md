@@ -26,10 +26,10 @@ This is a TypeScript CLI coding agent that wraps OpenAI's GPT-4o-mini with file 
 1. `src/index.ts` — loads `.env`, validates `OPENAI_API_KEY`, calls `startREPL()`
 2. `src/cli/repl.ts` — readline REPL handling `/exit`, `/clear`, `/help` slash commands
 3. `src/agent/agent.ts` — `CodingAgent` class using `openai.chat.completions.runTools()` with streaming; syncs `runner.messages` back to `this.messages` after each turn to capture tool call/result history
-4. `src/tools/index.ts` — wires all 6 tools, wraps each with `withLogging()` for display
+4. `src/tools/index.ts` — wires all 7 tools, wraps each with `withLogging()` for display
 5. `src/tools/*.ts` — individual tool implementations, each returning `ToolResult { success, output, error? }`
 
-**Tools:** `read_file`, `write_file`, `edit_file`, `list_directory`, `search_files`, `run_command`
+**Tools:** `read_file`, `write_file`, `edit_file`, `list_directory`, `search_files`, `run_command`, `web_search`
 
 ## Key Implementation Details
 
@@ -52,6 +52,8 @@ const { zodToJsonSchema } = require('zod-to-json-schema') as { zodToJsonSchema: 
 **`search_files`** uses `grep -rn` and only searches `.ts`, `.js`, `.json`, `.md` files. Results capped at 50 lines.
 
 **`list_directory`** builds a tree view, filters out `node_modules`, `.git`, and hidden files (`.`-prefixed), max depth 4.
+
+**`web_search`** POSTs to `https://html.duckduckgo.com/html/` with form data `q=QUERY`, parses the HTML response with regex to extract titles, URLs, and snippets. No API key or additional npm packages required — uses Node.js built-in `fetch`. Results capped at `max_results` (default 5, max 10).
 
 ## Linting & Formatting
 
@@ -80,6 +82,7 @@ tests/
     list-directory.test.ts
     search-files.test.ts
     run-command.test.ts
+    web-search.test.ts
   agent/
     agent.test.ts
 ```
@@ -91,5 +94,6 @@ tests/
 - `../../src/utils/confirm` — mocked for `run-command`
 - `../../src/utils/display` — mocked for `edit-file` and `agent`
 - `openai` — mocked for `agent`
+- `global.fetch` — mocked for `web-search` (`jest.fn()` assigned to `global.fetch`)
 
 **Do not run `tsc --noEmit`** — use `npm test` instead; ts-jest handles compilation per-file.
