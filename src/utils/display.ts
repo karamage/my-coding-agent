@@ -67,6 +67,8 @@ function formatArgsSummary(toolName: string, args: Record<string, unknown>): str
       return `pattern: "${args.pattern}" in ${args.path || '.'}`;
     case 'run_command':
       return `command: ${args.command}`;
+    case 'web_search':
+      return `query: "${args.query}" (max: ${args.max_results ?? 5})`;
     default:
       return JSON.stringify(args).slice(0, 100);
   }

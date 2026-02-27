@@ -8,6 +8,7 @@ A Claude Code-like terminal coding agent built with TypeScript and OpenAI GPT-4o
 - **Directory browsing** — tree-style listing of your project structure
 - **Code search** — grep-based search across `.ts`, `.js`, `.json`, and `.md` files
 - **Shell execution** — run commands with safety checks and user confirmation
+- **Web search** — search the web via DuckDuckGo (no API key required)
 - **Streaming output** — responses stream token by token in real time
 - **Conversation history** — full multi-turn context maintained across turns
 
@@ -56,6 +57,7 @@ Type naturally to chat with the agent. It will use tools autonomously to complet
 | `list_directory` | Browse directory structure as a tree             |
 | `search_files`   | Grep for patterns across source files            |
 | `run_command`    | Execute shell commands (requires confirmation)   |
+| `web_search`     | Search the web via DuckDuckGo (no API key)       |
 
 ## Development
 

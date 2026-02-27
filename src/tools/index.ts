@@ -7,6 +7,7 @@ import { editFile } from './edit-file';
 import { listDirectory } from './list-directory';
 import { searchFiles } from './search-files';
 import { runCommand } from './run-command';
+import { webSearch } from './web-search';
 import { showToolCall, showToolResult } from '../utils/display';
 
 // Zod schemas for tool parameters
@@ -38,6 +39,11 @@ const SearchFilesParams = z.object({
 const RunCommandParams = z.object({
   command: z.string().describe('The shell command to execute'),
   cwd: z.string().optional().describe('Working directory for the command'),
+});
+
+const WebSearchParams = z.object({
+  query: z.string().describe('Search query to look up on the web'),
+  max_results: z.number().int().min(1).max(10).optional().default(5).describe('Number of results (1-10, default: 5)'),
 });
 
 // Helper to wrap a tool function with logging
@@ -134,6 +140,19 @@ export const allTools = [
         return result.success ? result.output : `Error: ${result.error}`;
       }),
       parse: RunCommandParams.parse,
+    },
+  },
+  {
+    type: 'function' as const,
+    function: {
+      name: 'web_search',
+      description: 'Search the web for current information using DuckDuckGo',
+      parameters: zodToJsonSchema(WebSearchParams),
+      function: withLogging('web_search', async (args: z.infer<typeof WebSearchParams>) => {
+        const result = await webSearch(args.query, args.max_results);
+        return result.success ? result.output : `Error: ${result.error}`;
+      }),
+      parse: WebSearchParams.parse,
     },
   },
 ];
