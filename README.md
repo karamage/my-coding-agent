@@ -1,5 +1,7 @@
 # My Coding Agent
 
+[![CI](https://github.com/karamage/my-coding-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/karamage/my-coding-agent/actions/workflows/ci.yml)
+
 A Claude Code-like terminal coding agent built with TypeScript and OpenAI GPT-4o-mini. It can read, write, and edit files, run shell commands, and search through codebases — all from an interactive REPL.
 
 ## Features
